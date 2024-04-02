@@ -1,0 +1,267 @@
+mysql> USE chevauxdecurie;
+Database changed
+mysql> show tables;
++--------------------------+
+| Tables_in_chevauxdecurie |
++--------------------------+
+| cheval                   |
+| concour                  |
+| croissance               |
+| participer               |
+| person                   |
+| proprietaire             |
+| race                     |
++--------------------------+
+7 rows in set (0.01 sec)
+
+mysql> desc cheval;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| num_cheval     | int         | NO   | PRI | NULL    |       |
+| nom_cheval     | varchar(45) | YES  |     | NULL    |       |
+| num_tatouage   | varchar(45) | YES  |     | NULL    |       |
+| couleur_cheval | varchar(45) | YES  |     | NULL    |       |
+| num_chevalPere | int         | YES  | MUL | NULL    |       |
+| num_chevalMere | int         | YES  | MUL | NULL    |       |
+| num_persElveur | int         | YES  | MUL | NULL    |       |
+| nomRace        | varchar(20) | YES  | MUL | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+8 rows in set (0.02 sec)
+
+mysql> desc concour;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| nomConcour     | varchar(45) | NO   | PRI | NULL    |       |
+| anneeConcour   | int         | NO   | PRI | NULL    |       |
+| nbrParticipant | int         | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc croissance;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| ID_CROISSANCE | int         | NO   | PRI | NULL    |       |
+| mois          | int         | YES  |     | NULL    |       |
+| tailleMois    | varchar(45) | YES  |     | NULL    |       |
+| poidsMois     | varchar(45) | YES  |     | NULL    |       |
+| num_cheval    | int         | YES  | MUL | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> desc participer;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| num_cheval   | int         | YES  | MUL | NULL    |       |
+| nom_concour  | varchar(45) | YES  | MUL | NULL    |       |
+| anneeConcour | int         | YES  |     | NULL    |       |
+| placeConcour | varchar(45) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc person;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| num_person    | int         | NO   | PRI | NULL    |       |
+| nom           | varchar(45) | YES  |     | NULL    |       |
+| prenom        | varchar(45) | YES  |     | NULL    |       |
+| telephon      | varchar(45) | YES  |     | NULL    |       |
+| adresse       | varchar(45) | YES  |     | NULL    |       |
+| fonction      | varchar(45) | YES  |     | NULL    |       |
+| num_personSup | int         | YES  | MUL | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+7 rows in set (0.02 sec)
+
+mysql> desc proprietaire;
++------------+--------+------+-----+---------+-------+
+| Field      | Type   | Null | Key | Default | Extra |
++------------+--------+------+-----+---------+-------+
+| num_person | int    | YES  | MUL | NULL    |       |
+| num_cheval | int    | YES  | MUL | NULL    |       |
+| dateAchat  | date   | NO   | PRI | NULL    |       |
+| prix_Achat | double | YES  |     | NULL    |       |
++------------+--------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc race;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| nomRace    | varchar(20)   | NO   | PRI | NULL    |       |
+| poidType   | decimal(10,2) | YES  |     | NULL    |       |
+| tailleType | decimal(10,2) | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> select * from race;
++--------------+----------+------------+
+| nomRace      | poidType | tailleType |
++--------------+----------+------------+
+| Akhal-Téké   |   330.00 |     165.00 |
+| Appaloosa    |   320.00 |     155.00 |
+| arabian      |   300.00 |     150.00 |
+| Frison       |   350.00 |     160.00 |
+| Haflinger    |   310.00 |     158.00 |
++--------------+----------+------------+
+5 rows in set (0.03 sec)
+
+mysql> select * from proprietaire;
++------------+------------+------------+------------+
+| num_person | num_cheval | dateAchat  | prix_Achat |
++------------+------------+------------+------------+
+|          5 |          1 | 2023-01-01 |       5000 |
+|          5 |          2 | 2023-02-01 |       6000 |
+|          5 |          3 | 2023-03-01 |       7000 |
+|          5 |          4 | 2023-04-01 |       8000 |
+|          5 |          5 | 2023-05-01 |       9000 |
+|          6 |          3 | 2023-06-01 |      10000 |
++------------+------------+------------+------------+
+6 rows in set (0.01 sec)
+
+mysql> select * from person;
++------------+---------+---------+-----------+------------------+---------------+---------------+
+| num_person | nom     | prenom  | telephon  | adresse          | fonction      | num_personSup |
++------------+---------+---------+-----------+------------------+---------------+---------------+
+|          1 | Doe     | John    | 123456789 | 123 Main Street  | Directeur     |          NULL |
+|          2 | Smith   | Alice   | 987654321 | 456 Elm Street   | Secrétaire    |             1 |
+|          3 | Johnson | Robert  | 654987321 | 789 Oak Avenue   | Éleveur       |             1 |
+|          4 | Brown   | Emily   | 321456987 | 101 Pine Street  | Comptable     |             1 |
+|          5 | Wilson  | Michael | 789123456 | 222 Maple Avenue | Propriétaire  |          NULL |
+|          6 | Wilson  | Michael | 789123456 | 242 Maple Avenue | Propriétaire  |          NULL |
++------------+---------+---------+-----------+------------------+---------------+---------------+
+6 rows in set (0.01 sec)
+
+mysql> select * from participer;
++------------+------------------------------------+--------------+--------------+
+| num_cheval | nom_concour                        | anneeConcour | placeConcour |
++------------+------------------------------------+--------------+--------------+
+|          1 | Jumping International de Marrakech |         2023 | Première     |
+|          2 | Grand Prix de Casablanca           |         2023 | Deuxième     |
+|          3 | Concours Hippique de Rabat         |         2023 | Troisième    |
+|          4 | Championnat Équestre d'Agadir      |         2023 | Quatrième    |
+|          5 | Tournoi de Dressage de Fès         |         2023 | Cinquième    |
++------------+------------------------------------+--------------+--------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from croissance;
++---------------+------+------------+-----------+------------+
+| ID_CROISSANCE | mois | tailleMois | poidsMois | num_cheval |
++---------------+------+------------+-----------+------------+
+|             1 |    1 | 150        | 300       |          1 |
+|             2 |    2 | 155        | 320       |          1 |
+|             3 |    1 | 160        | 350       |          2 |
+|             4 |    2 | 165        | 330       |          2 |
+|             5 |    1 | 158        | 310       |          3 |
++---------------+------+------------+-----------+------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from concour;
++------------------------------------+--------------+----------------+
+| nomConcour                         | anneeConcour | nbrParticipant |
++------------------------------------+--------------+----------------+
+| Championnat Équestre d'Agadir      |         2023 |             80 |
+| Concours Hippique de Rabat         |         2023 |             70 |
+| Grand Prix de Casablanca           |         2023 |             60 |
+| Jumping International de Marrakech |         2023 |             50 |
+| Tournoi de Dressage de Fès         |         2023 |             90 |
++------------------------------------+--------------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from cheval;
++------------+------------+--------------+----------------+----------------+----------------+----------------+--------------+
+| num_cheval | nom_cheval | num_tatouage | couleur_cheval | num_chevalPere | num_chevalMere | num_persElveur | nomRace      |
++------------+------------+--------------+----------------+----------------+----------------+----------------+--------------+
+|          1 | Aramis     | ABC123       | Noir           |           NULL |           NULL |              3 | arabian      |
+|          2 | Bella      | DEF456       | Blanc          |           NULL |           NULL |              3 | Frison       |
+|          3 | Casanova   | GHI789       | Marron         |              1 |              2 |              4 | Appaloosa
+    |
+|          4 | Diamant    | JKL012       | Gris           |              1 |              2 |              4 | Haflinger    |
+|          5 | Éclair     | MNO345       | Alezan         |              1 |              2 |              5 | Akhal-Téké   |
++------------+------------+--------------+----------------+----------------+----------------+----------------+--------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT COUNT(*) AS Nombre_de_chevaux_noir FROM cheval WHERE couleur_cheval = 'Noir';
++------------------------+
+| Nombre_de_chevaux_noir |
++------------------------+
+|                      1 |
++------------------------+
+1 row in set (0.01 sec)
+       SELECT COUNT(*) AS Nombre_de_chevaux_AngloArabe FROM cheval WHERE nomRace = 'AngloArabe';
++------------------------------+
+| Nombre_de_chevaux_AngloArabe |
++------------------------------+
+|                            0 |
++------------------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT num_cheval, nom_cheval FROM cheval WHERE num_tatouage = 'T0415';
+Empty set (0.01 sec)
+
+mysql> SELECT COUNT(*) AS Nombre_d_editions_de_Concours_Dubai FROM concour WHERE nomConcour = 'Concours Dubai';
++-------------------------------------+
+| Nombre_d_editions_de_Concours_Dubai |
++-------------------------------------+
+|                                   0 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(nbrParticipant) AS Nombre_total_de_participants_de_Concours_Dubai FROM concour WHERE nomConcour = 'Concours Dubai';
++------------------------------------------------+
+| Nombre_total_de_participants_de_Concours_Dubai |
++------------------------------------------------+
+|                                           NULL |
++------------------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT nom_concour, anneeConcour FROM participer WHERE placeConcour = 'Première';
++------------------------------------+--------------+
+| nom_concour                        | anneeConcour |
++------------------------------------+--------------+
+| Jumping International de Marrakech |         2023 |
++------------------------------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT cheval.num_cheval, cheval.nom_cheval
+    -> FROM participer
+    -> JOIN cheval ON participer.num_cheval = cheval.num_cheval
+    -> WHERE anneeConcour = 2018 AND nom_concour = 'Concours de Londres';
+Empty set (0.00 sec)
+
+mysql> SELECT nom, prenom FROM person WHERE fonction = 'Directeur';
++------+--------+
+| nom  | prenom |
++------+--------+
+| Doe  | John   |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(DISTINCT num_person) AS Nombre_de_proprietaires FROM proprietaire;
++-------------------------+
+| Nombre_de_proprietaires |
++-------------------------+
+|                       2 |
++-------------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(*) AS Nombre_de_chevaux_achetes_en_2020 FROM proprietaire WHERE num_person = 6 AND YEAR(dateAchat) = 2020;
++-----------------------------------+
+| Nombre_de_chevaux_achetes_en_2020 |
++-----------------------------------+
+|                                 0 |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(prix_Achat) AS Montant_total_paye_pour_acheter_les_chevaux FROM proprietaire WHERE num_person = 6;
++---------------------------------------------+
+| Montant_total_paye_pour_acheter_les_chevaux |
++---------------------------------------------+
+|                                       10000 |
++---------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,325 @@
+mysql> use centreformation;
+Database changed
+mysql> show tables;
++---------------------------+
+| Tables_in_centreformation |
++---------------------------+
+| catalogue                 |
+| etudient                  |
+| formation                 |
+| inscription               |
+| session                   |
+| specialite                |
++---------------------------+
+6 rows in set (0.02 sec)
+
+mysql> desc catalogue;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| codeSpec | int  | NO   | PRI | NULL    |       |
+| codeForm | int  | NO   | PRI | NULL    |       |
++----------+------+------+-----+---------+-------+
+2 rows in set (0.05 sec)
+
+mysql> desc etudient;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| numCINEtu     | varchar(20)  | NO   | PRI | NULL    |       |
+| nomEtu        | varchar(45)  | YES  |     | NULL    |       |
+| prenomEtu     | varchar(45)  | YES  |     | NULL    |       |
+| dateNaissance | date         | YES  |     | NULL    |       |
+| adressEtu     | varchar(255) | YES  |     | NULL    |       |
+| villeEtu      | varchar(29)  | YES  |     | NULL    |       |
+| niveauEtu     | varchar(20)  | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> desc  formation;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| codeForm  | int         | NO   | PRI | NULL    |       |
+| titreForm | varchar(50) | YES  |     | NULL    |       |
+| dureeForm | int         | YES  |     | NULL    |       |
+| prixForm  | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc inscription;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| codeSess       | int         | NO   | PRI | NULL    |       |
+| num_CINEtu     | varchar(15) | NO   | PRI | NULL    |       |
+| TypeCours      | varchar(15) | YES  |     | NULL    |       |
+| numInscription | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc session;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| codeSess  | int         | NO   | PRI | NULL    |       |
+| nomSess   | varchar(30) | YES  |     | NULL    |       |
+| Datedebut | date        | YES  |     | NULL    |       |
+| Datefin   | date        | YES  |     | NULL    |       |
+| codeForm  | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc specialite;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| codeSpec | int         | NO   | PRI | NULL    |       |
+| nomSpec  | varchar(25) | YES  |     | NULL    |       |
+| descSpec | varchar(40) | YES  |     | NULL    |       |
+| Active   | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select * FROM catalogue;
++----------+----------+
+| codeSpec | codeForm |
++----------+----------+
+|      101 |       11 |
+|      101 |       12 |
+|      103 |       13 |
+|      104 |       13 |
+|      104 |       14 |
+|      101 |       15 |
+|      102 |       15 |
+|      104 |       16 |
++----------+----------+
+8 rows in set (0.05 sec)
+
+mysql> select * FROM etudient;
++-----------+---------------+--------------+---------------+-----------------------------------------+------------+------------+
+| numCINEtu | nomEtu        | prenomEtu    | dateNaissance | adressEtu                               | villeEtu   | niveauEtu  |
++-----------+---------------+--------------+---------------+-----------------------------------------+------------+------------+
+| AB234567  | Alami         | Ahmad        | 1986-01-01    | Rue du port , 13                        | Tanger     | Bac        |
+| C0987265  | Souni         | Sanaa        | 1998-04-30    | Place du peuple n 2                     | Tanger     | Niveau bac |
+| D2356903  | Idrissi Alami | Mohamed      | 1996-05-05    | Lotissement najah , rue n 12 immeuble 3 | Rabat      | Bac + 4    |
+| F9827363  | Boudiaf       | Fatima Zohra | 1997-01-10    | Immeuble iftikhar, n13 ettakaddoum      | Rabat      | Bac + 2    |
+| G5346789  | Toumi         | Aicha        | 2000-03-12    | n 12 immeuble Jaouhara                  | Casablanca | bac + 5    |
+| J3578902  | Ben Omar      | Abd Allah    | 1990-06-25    | Villa Amina, n12 bir rami               | Kenitra    | doctorat   |
+| Y1234987  | Ouled thami   | Ali          | 1979-12-04    | La ville haute , rue chouhada n6        | Tanger     | bac + 4    |
++-----------+---------------+--------------+---------------+-----------------------------------------+------------+------------+
+7 rows in set (0.01 sec)
+
+mysql> select * FROM formation;
++----------+-------------------------+-----------+----------+
+| codeForm | titreForm               | dureeForm | prixForm |
++----------+-------------------------+-----------+----------+
+|       11 | developpement java      |        12 |     3600 |
+|       12 | Web developpement       |        14 |     4200 |
+|       13 | Anglais technique       |        15 |     3750 |
+|       14 | Communication           |        10 |     2500 |
+|       15 | Base de données Oracle  |        20 |     6000 |
+|       16 | Soft skills             |        12 |     3000 |
++----------+-------------------------+-----------+----------+
+6 rows in set (0.02 sec)
+
+mysql> select * FROM inscription;
++----------+------------+-----------+----------------+
+| codeSess | num_CINEtu | TypeCours | numInscription |
++----------+------------+-----------+----------------+
+|     1101 | AB234567   | D         | 1101 AB234567  |
+|     1101 | C0987265   | D         | 1101 C0987265  |
+|     1101 | D2356903   | D         | 1101 D2356903  |
+|     1101 | F9827363   | D         | 1101 F9827363  |
+|     1101 | G5346789   | D         | 1101 G5346789  |
+|     1101 | J3578902   | D         | 1101 J3578902  |
+|     1101 | Y1234987   | D         | 1101 Y1234987  |
+|     1201 | AB234567   | P         | 1201 AB234567  |
+|     1201 | C0987265   | P         | 1201 C0987265  |
+|     1201 | D2356903   | P         | 1201 D2356903  |
+|     1201 | G5346789   | P         | 1201 G5346789  |
+|     1201 | J3578902   | P         | 1201 J3578902  |
+|     1201 | Y1234987   | P         | 1201 Y1234987  |
+|     1302 | AB234567   | P         | 1302 AB234567  |
+|     1302 | C0987265   | P         | 1302 C0987265  |
+|     1302 | D2356903   | P         | 1302 D2356903  |
+|     1302 | G5346789   | P         | 1302 G5346789  |
+|     1302 | Y1234987   | P         | 1302 Y1234987  |
+|     1401 | C0987265   | D         | 1401 C0987265  |
+|     1401 | D2356903   | D         | 1401 D2356903  |
+|     1401 | F9827363   | D         | 1401 F9827363  |
+|     1401 | G5346789   | D         | 1401 G5346789  |
+|     1401 | J3578902   | D         | 1401 J3578902  |
+|     1401 | Y1234987   | D         | 1401 Y1234987  |
+|     1501 | AB234567   | D         | 1501 AB234567  |
+|     1501 | C0987265   | D         | 1501 C0987265  |
+|     1501 | D2356903   | D         | 1501 D2356903  |
+|     1501 | F9827363   | D         | 1501 F9827363  |
+|     1501 | G5346789   | D         | 1501 G5346789  |
+|     1501 | J3578902   | D         | 1501 J3578902  |
+|     1501 | Y1234987   | D         | 1501 Y1234987  |
++----------+------------+-----------+----------------+
+31 rows in set (0.01 sec)
+
+mysql> select * FROM session;
++----------+-------------+------------+------------+----------+
+| codeSess | nomSess     | Datedebut  | Datefin    | codeForm |
++----------+-------------+------------+------------+----------+
+|     1101 | Session1101 | 2022-01-02 | 2022-01-14 |       11 |
+|     1102 | Session1102 | 2022-02-03 | 2022-02-15 |       11 |
+|     1104 | Session1104 | 2022-10-15 | 2022-10-27 |       11 |
+|     1201 | Session1201 | 2022-03-04 | 2022-03-18 |       12 |
+|     1202 | Session1202 | 2022-04-05 | 2022-04-19 |       12 |
+|     1203 | Session1203 | 2022-11-16 | 2022-11-30 |       12 |
+|     1204 | Session1204 | 2022-12-17 | 2022-12-31 |       12 |
+|     1301 | Session1301 | 2022-01-06 | 2022-01-21 |       13 |
+|     1302 | Session1302 | 2022-05-07 | 2022-05-22 |       13 |
+|     1303 | Session1303 | 2022-06-08 | 2022-06-23 |       13 |
+|     1401 | Session1401 | 2022-09-01 | 2022-09-11 |       14 |
+|     1402 | Session1402 | 2022-08-08 | 2022-08-18 |       14 |
+|     1501 | Session1501 | 2022-11-11 | 2022-12-01 |       15 |
+|     1502 | Session1502 | 2022-09-12 | 2022-10-02 |       15 |
+|     1601 | Session1601 | 2022-09-13 | 2022-09-25 |       16 |
+|     1602 | Session1602 | 2022-10-14 | 2022-10-26 |       16 |
++----------+-------------+------------+------------+----------+
+16 rows in set (0.01 sec)
+
+mysql> select * FROM specialite;
++----------+---------------+----------------------------------+--------+
+| codeSpec | nomSpec       | descSpec                         | Active |
++----------+---------------+----------------------------------+--------+
+|      101 | GL            | Génie logiciel et developpement  |      1 |
+|      102 | Data          | Data engineering                 |      1 |
+|      103 | Langues       | Anglais , francais               |      1 |
+|      104 | Communication | Communication                    |      1 |
+|      105 | Sécurité      | Réseaux et sécurité              |      0 |
++----------+---------------+----------------------------------+--------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT f.titreForm, s.nomSess, s.Datedebut, s.Datefin
+    -> FROM formation f
+    -> INNER JOIN session s ON f.codeForm = s.codeForm;
++-------------------------+-------------+------------+------------+
+| titreForm               | nomSess     | Datedebut  | Datefin    |
++-------------------------+-------------+------------+------------+
+| developpement java      | Session1101 | 2022-01-02 | 2022-01-14 |
+| developpement java      | Session1102 | 2022-02-03 | 2022-02-15 |
+| developpement java      | Session1104 | 2022-10-15 | 2022-10-27 |
+| Web developpement       | Session1201 | 2022-03-04 | 2022-03-18 |
+| Web developpement       | Session1202 | 2022-04-05 | 2022-04-19 |
+| Web developpement       | Session1203 | 2022-11-16 | 2022-11-30 |
+| Web developpement       | Session1204 | 2022-12-17 | 2022-12-31 |
+| Anglais technique       | Session1301 | 2022-01-06 | 2022-01-21 |
+| Anglais technique       | Session1302 | 2022-05-07 | 2022-05-22 |
+| Anglais technique       | Session1303 | 2022-06-08 | 2022-06-23 |
+| Communication           | Session1401 | 2022-09-01 | 2022-09-11 |
+| Communication           | Session1402 | 2022-08-08 | 2022-08-18 |
+| Base de données Oracle  | Session1501 | 2022-11-11 | 2022-12-01 |
+| Base de données Oracle  | Session1502 | 2022-09-12 | 2022-10-02 |
+| Soft skills             | Session1601 | 2022-09-13 | 2022-09-25 |
+| Soft skills             | Session1602 | 2022-10-14 | 2022-10-26 |
++-------------------------+-------------+------------+------------+
+16 rows in set (0.01 sec)
+
+mysql> SELECT f.titreForm, e.nomEtu, e.prenomEtu
+    -> FROM formation f
+    -> INNER JOIN catalogue c ON f.codeForm = c.codeForm
+    -> INNER JOIN inscription i ON c.codeForm = i.codeSess
+    -> INNER JOIN etudient e ON i.num_CINEtu = e.numCINEtu
+    -> ORDER BY f.titreForm;
+Empty set (0.01 sec)
+
+mysql> SELECT TypeCours, COUNT(*) AS Nombre_Inscriptions
+    -> FROM inscription i
+    -> INNER JOIN session s ON i.codeSess = s.codeSess
+    -> WHERE s.codeForm = (SELECT codeForm FROM formation WHERE titreForm = 'Web developpement')
+    -> GROUP BY TypeCours;
++-----------+---------------------+
+| TypeCours | Nombre_Inscriptions |
++-----------+---------------------+
+| P         |                   6 |
++-----------+---------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT f.titreForm, COUNT(*) AS Nombre_Inscriptions
+    -> FROM formation f
+    -> INNER JOIN session s ON f.codeForm = s.codeForm
+    -> INNER JOIN inscription i ON s.codeSess = i.codeSess
+    -> WHERE i.TypeCours = 'D'
+    -> GROUP BY f.titreForm
+    -> HAVING COUNT(*) >= 3
+    -> ORDER BY Nombre_Inscriptions;
++-------------------------+---------------------+
+| titreForm               | Nombre_Inscriptions |
++-------------------------+---------------------+
+| Communication           |                   6 |
+| developpement java      |                   7 |
+| Base de données Oracle  |                   7 |
++-------------------------+---------------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT sp.nomSpec, f.titreForm, f.dureeForm, f.prixForm
+    -> FROM specialite sp
+    -> INNER JOIN catalogue c ON sp.codeSpec = c.codeSpec
+    -> INNER JOIN formation f ON c.codeForm = f.codeForm
+    -> WHERE sp.Active = 1
+    -> ORDER BY sp.nomSpec DESC;
++---------------+-------------------------+-----------+----------+
+| nomSpec       | titreForm               | dureeForm | prixForm |
++---------------+-------------------------+-----------+----------+
+| Langues       | Anglais technique       |        15 |     3750 |
+| GL            | developpement java      |        12 |     3600 |
+| GL            | Web developpement       |        14 |     4200 |
+| GL            | Base de données Oracle  |        20 |     6000 |
+| Data          | Base de données Oracle  |        20 |     6000 |
+| Communication | Anglais technique       |        15 |     3750 |
+| Communication | Communication           |        10 |     2500 |
+| Communication | Soft skills             |        12 |     3000 |
++---------------+-------------------------+-----------+----------+
+8 rows in set (0.01 sec)
+
+mysql> (SELECT f.titreForm, COUNT(*) AS Nombre_Inscriptions
+    -> FROM formation f
+    -> INNER JOIN session s ON f.codeForm = s.codeForm
+    -> INNER JOIN inscription i ON s.codeSess = i.codeSess
+    -> WHERE i.TypeCours = 'N'
+    -> GROUP BY f.titreForm
+    -> HAVING COUNT(*) >= 4)
+    ->
+    -> UNION
+    ->
+    -> (SELECT f.titreForm, COUNT(*) AS Nombre_Inscriptions
+    -> FROM formation f
+    -> INNER JOIN session s ON f.codeForm = s.codeForm
+    -> INNER JOIN inscription i ON s.codeSess = i.codeSess
+    -> WHERE i.TypeCours = 'P'
+    -> GROUP BY f.titreForm
+    -> HAVING COUNT(*) >= 4);
++-------------------+---------------------+
+| titreForm         | Nombre_Inscriptions |
++-------------------+---------------------+
+| Web developpement |                   6 |
+| Anglais technique |                   5 |
++-------------------+---------------------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT YEAR(s.Datedebut) AS Annee, MONTH(s.Datedebut) AS Mois, SUM(f.prixForm) AS Total_Prix
+    -> FROM session s
+    -> INNER JOIN formation f ON s.codeForm = f.codeForm
+    -> GROUP BY Annee, Mois;
++-------+------+------------+
+| Annee | Mois | Total_Prix |
++-------+------+------------+
+|  2022 |    1 |       7350 |
+|  2022 |    2 |       3600 |
+|  2022 |   10 |       6600 |
+|  2022 |    3 |       4200 |
+|  2022 |    4 |       4200 |
+|  2022 |   11 |      10200 |
+|  2022 |   12 |       4200 |
+|  2022 |    5 |       3750 |
+|  2022 |    6 |       3750 |
+|  2022 |    9 |      11500 |
+|  2022 |    8 |       2500 |
++-------+------+------------+
+11 rows in set (0.00 sec)
